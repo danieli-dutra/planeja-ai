@@ -69,5 +69,14 @@ export async function getInsight(prompt: string) {
     .replace(/```/g, '')
     .trim()
 
-  return JSON.parse(cleanJson) as InsightData
+  try {
+    return JSON.parse(cleanJson) as InsightData
+  } catch (error) {
+    console.error('Resposta da Gemini não é um JSON válido:', rawText)
+    console.error('Erro ao fazer JSON.parse:', error)
+
+    throw new Error('A IA retornou uma resposta em formato inválido.', {
+      cause: error,
+    })
+  }
 }
