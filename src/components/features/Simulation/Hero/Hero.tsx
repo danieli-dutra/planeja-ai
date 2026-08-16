@@ -1,0 +1,14 @@
+export function SimulationHero() {
+  return (
+    <div className="mb-8 text-center">
+      <div className="flex flex-col items-center sm:flex-row">
+        <h1 className="text-3xl font-semibold text-foreground sm:text-4xl">
+          Vamos planejar seu futuro
+        </h1>
+      </div>
+      <p className="mt-2 text-sm text-muted-foreground">
+        Responda algumas questões para ter insights financeiros personalizados.
+      </p>
+    </div>
+  )
+}
