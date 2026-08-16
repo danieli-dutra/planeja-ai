@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom'
 
 import { AIInsightCard } from '@/components/features/SimulationResults/AIInsightCardProps'
 import { Card } from '@/components/features/SimulationResults/Card'
+import { FinancialSummary } from '@/components/features/SimulationResults/FinancialSummary'
 import { PageHero } from '@/components/shared/PageHero'
 import { useSimulationStorage } from '@/hooks/useSimulationStorage'
 import { calcMonthlySavings } from '@/utils/simulation'
@@ -53,12 +54,14 @@ export function SimulationResultsPage() {
           value={goalAmount}
           subtitle={goalName}
         />
+
         <Card
           icon={CalendarClock}
           label="Prazo"
           value={`${goalDeadline} meses`}
           subtitle="Prazo para atingir a meta"
         />
+
         <Card
           variant="primary"
           icon={PiggyBank}
@@ -71,6 +74,8 @@ export function SimulationResultsPage() {
         />
       </div>
 
+      <FinancialSummary data={data} />
+
       <div className="grid gap-6 lg:grid-cols-3">
         <AIInsightCard simulationId={id ?? data.id} />
 
@@ -81,12 +86,14 @@ export function SimulationResultsPage() {
             value={income}
             subtitle="Renda total bruta por mês"
           />
+
           <Card
             icon={CreditCard}
             label="Custos Fixos de Vida"
             value={expenses}
             subtitle="Gastos essenciais por mês"
           />
+
           <Card
             icon={Landmark}
             label="Dívidas / Parcelas"
