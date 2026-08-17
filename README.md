@@ -2,21 +2,25 @@
 
 > **Seu planejamento financeiro, mais claro e inteligente.**
 
-O **Planeja.ai** é uma aplicação web de planejamento financeiro pessoal desenvolvida durante um desafio da **Digital Innovation One (DIO)**.
+Uma aplicação web de planejamento financeiro que combina **simulação, análise de cenários e Inteligência Artificial** em uma experiência simples e visual.
 
-A proposta é permitir que a pessoa usuária informe sua renda, gastos, dívidas e um objetivo financeiro para receber uma simulação personalizada e insights gerados por Inteligência Artificial.
+A pessoa usuária informa sua renda, gastos, dívidas e uma meta financeira. A aplicação calcula sua capacidade mensal, apresenta uma análise do cenário e utiliza o Google Gemini para gerar insights personalizados.
 
-A aplicação transforma os dados preenchidos em uma visão mais clara sobre a capacidade financeira atual, o valor necessário para alcançar uma meta e possíveis caminhos para melhorar o planejamento.
+## 🔗 Teste o projeto
+
+### 💜 [Acessar o Planeja.ai](https://planeja-ai-br.vercel.app/)
+
+O projeto está disponível para teste diretamente pelo navegador.
+
+Também é possível clonar o repositório e executar a aplicação localmente seguindo as instruções abaixo.
 
 ---
 
-## 🎯 Sobre o desafio
+## 🎯 Sobre o projeto
 
-Este projeto foi desenvolvido a partir do desafio proposto pela **Digital Innovation One**, com o objetivo de praticar a construção de uma aplicação Front-End utilizando React, TypeScript e Inteligência Artificial Generativa.
+O Planeja.ai foi desenvolvido a partir de um desafio da **Digital Innovation One (DIO)**, com foco na construção de uma aplicação Front-End utilizando React, TypeScript e Inteligência Artificial Generativa.
 
-O projeto-base apresenta um Educador Financeiro Inteligente capaz de analisar os dados de uma simulação financeira e gerar recomendações personalizadas.
-
-A partir da implementação proposta no desafio, foram realizadas algumas melhorias para explorar os conceitos aprendidos e tornar a experiência mais completa.
+Durante o desenvolvimento, foram implementadas funcionalidades adicionais e melhorias de arquitetura, experiência do usuário e segurança.
 
 ---
 
@@ -26,218 +30,211 @@ A partir da implementação proposta no desafio, foram realizadas algumas melhor
 
 A pessoa usuária informa:
 
-- Renda mensal;
-- Custos fixos;
-- Dívidas e parcelas;
-- Nome da meta;
-- Valor da meta;
-- Prazo desejado.
+* Renda mensal
+* Custos fixos
+* Dívidas e parcelas
+* Nome da meta
+* Valor da meta
+* Prazo desejado
 
-A partir dessas informações, a aplicação calcula a capacidade mensal disponível para planejamento.
-
----
+A aplicação utiliza esses dados para calcular a capacidade financeira mensal e o valor necessário para alcançar a meta dentro do prazo informado.
 
 ### 🤖 Insights financeiros com IA
 
-Após a simulação, o Planeja.ai utiliza a **API do Google Gemini** para gerar um diagnóstico personalizado.
+O Google Gemini analisa os dados da simulação e gera um diagnóstico personalizado com:
 
-Os insights são organizados em diferentes dimensões:
+* Viabilidade da meta
+* Diagnóstico financeiro
+* Sugestões práticas
+* Possibilidades de renda extra
+* Sugestões de investimento
+* Mensagem motivacional
 
-- Viabilidade da meta;
-- Diagnóstico financeiro;
-- Sugestões práticas;
-- Possibilidades de renda extra;
-- Sugestões de investimento;
-- Mensagem motivacional.
+A integração também conta com loading, tratamento de erros, validação da resposta e controle de chamadas duplicadas.
 
-A aplicação também possui tratamento para:
+### 🔐 API protegida
 
-- Loading;
-- Erros na requisição;
-- Respostas inválidas da IA;
-- Chamadas duplicadas;
-- Persistência dos insights gerados.
+A comunicação com o Gemini utiliza uma **Serverless Function da Vercel**.
 
----
+A chave da API não é exposta no código executado pelo navegador.
+
+```text
+┌──────────────────────┐
+│     Planeja.ai       │
+│     Front-End        │
+└──────────┬───────────┘
+           │
+           │ POST /api/insight
+           ▼
+┌──────────────────────┐
+│ Vercel Serverless    │
+│      Function        │
+└──────────┬───────────┘
+           │
+           │ GEMINI_API_KEY
+           ▼
+┌──────────────────────┐
+│     Google Gemini    │
+└──────────────────────┘
+```
+
+A variável `GEMINI_API_KEY` fica armazenada no ambiente do servidor.
 
 ### 🕘 Histórico de simulações
 
-O Planeja.ai permite consultar simulações já realizadas.
+As simulações podem ser consultadas posteriormente.
 
-A pessoa usuária pode:
+É possível:
 
-- Visualizar simulações anteriores;
-- Acessar os detalhes de uma simulação;
-- Consultar os resultados novamente;
-- Excluir registros do histórico.
+* Visualizar simulações anteriores
+* Acessar seus resultados
+* Consultar os insights novamente
+* Excluir registros
 
-Os dados são persistidos utilizando **localStorage**, permitindo que as simulações permaneçam disponíveis no navegador.
-
----
+O histórico utiliza `localStorage` para persistência no navegador.
 
 ### 📈 Análise financeira
 
-Foi adicionada uma análise rápida da situação financeira.
+A página de resultados apresenta:
 
-A aplicação apresenta:
-
-- Percentual da renda comprometida;
-- Valor necessário para atingir a meta mensalmente;
-- Capacidade financeira mensal atual;
-- Comparação entre a capacidade atual e o valor necessário para alcançar a meta.
-
-Essa análise permite identificar rapidamente se a meta está dentro da capacidade financeira informada.
-
----
+* Percentual da renda comprometida
+* Capacidade financeira mensal
+* Valor necessário para alcançar a meta
+* Comparação entre a capacidade atual e o valor necessário
 
 ### 🎯 Simulador interativo de prazo
 
-Foi implementado um simulador que permite ajustar o prazo da meta de maneira interativa utilizando um **slider**.
+Um **slider** permite alterar o prazo da meta e visualizar como a mudança interfere no valor necessário para economizar mensalmente.
 
-A ideia é permitir que a pessoa usuária explore diferentes cenários e perceba como a alteração do prazo influencia o planejamento mensal.
-
-Essa funcionalidade complementa a simulação original sem alterar os dados financeiros cadastrados.
-
----
+A funcionalidade permite comparar diferentes cenários sem precisar iniciar uma nova simulação.
 
 ### 🌙 Tema claro e escuro
 
-A aplicação possui suporte a:
+A aplicação possui suporte para:
 
-- ☀️ Tema claro;
-- 🌙 Tema escuro.
+* ☀️ Tema claro
+* 🌙 Tema escuro
 
 ---
 
-## 🧠 Fluxo principal
+## 🧠 Fluxo da aplicação
 
 ```text
-┌─────────────────────┐
-│  Preencher dados    │
-│  financeiros        │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ Gerar simulação     │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ Cálculos financeiros│
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ Gemini API           │
-│ Diagnóstico com IA   │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ Resultado            │
-│ + análise financeira │
-│ + insights           │
-└──────────┬──────────┘
-           │
-           ├──────────────► Histórico
-           │
-           └──────────────► Simulador de prazo
+Preenchimento dos dados
+          │
+          ▼
+     Simulação
+          │
+          ▼
+ Cálculos financeiros
+          │
+          ▼
+   /api/insight
+          │
+          ▼
+    Google Gemini
+          │
+          ▼
+      Resultados
+       /      \
+      ▼        ▼
+ Histórico   Simulador
 ```
 
 ---
 
-## 🛠️ Tecnologias utilizadas
+## 🛠️ Tecnologias
 
 ### Front-End
 
-- [React](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Vite](https://vite.dev/)
-- [Tailwind CSS](https://tailwindcss.com/)
+* React
+* TypeScript
+* Vite
+* Tailwind CSS
+* React Router
 
 ### Interface
 
-- [Radix UI](https://www.radix-ui.com/)
-- [Lucide React](https://lucide.dev/)
-- React Loading Skeleton
+* Radix UI
+* Lucide React
+* React Loading Skeleton
 
 ### Inteligência Artificial
 
-- [Google Gemini API](https://ai.google.dev/)
+* Google Gemini API
+* Vercel Serverless Functions
 
-### Gerenciamento e persistência
+### Persistência
 
-- React Hooks
-- LocalStorage
-- React Router
+* LocalStorage
+* React Hooks
 
 ### Qualidade de código
 
-- ESLint
-- TypeScript
-- Prettier
+* ESLint
+* TypeScript
+* Prettier
 
 ---
 
 ## 📁 Estrutura do projeto
 
 ```text
-src/
-├── components/
-│   ├── features/
-│   │   ├── Insights/
-│   │   ├── Simulation/
-│   │   └── SimulationResults/
-│   └── shared/
+planeja-ai/
+├── api/
+│   └── insight.ts
 │
-├── data/
-│   ├── aiPrompt.ts
-│   └── simulation.ts
+├── src/
+│   ├── components/
+│   │   ├── features/
+│   │   │   ├── Insights/
+│   │   │   ├── Simulation/
+│   │   │   └── SimulationResults/
+│   │   └── shared/
+│   │
+│   ├── data/
+│   │   ├── aiPrompt.ts
+│   │   └── simulation.ts
+│   │
+│   ├── hooks/
+│   │   ├── useInsight.tsx
+│   │   └── useSimulationStorage.tsx
+│   │
+│   ├── pages/
+│   │   ├── HomePage.tsx
+│   │   ├── SimulationPage.tsx
+│   │   ├── SimulationResultsPage.tsx
+│   │   └── HistoryPage.tsx
+│   │
+│   ├── services/
+│   │   └── aiService.ts
+│   │
+│   ├── utils/
+│   │   ├── currency.ts
+│   │   └── simulation.ts
+│   │
+│   └── App.tsx
 │
-├── hooks/
-│   ├── useInsight.tsx
-│   └── useSimulationStorage.tsx
-│
-├── pages/
-│   ├── HomePage.tsx
-│   ├── SimulationPage.tsx
-│   ├── SimulationResultsPage.tsx
-│   └── HistoryPage.tsx
-│
-├── services/
-│   └── aiService.ts
-│
-├── utils/
-│   ├── currency.ts
-│   └── simulation.ts
-│
-└── App.tsx
+├── .env.local
+├── package.json
+└── vite.config.ts
 ```
-
-> A estrutura pode sofrer pequenas alterações conforme a evolução do projeto.
 
 ---
 
-## ⚙️ Como executar
+## ⚙️ Como executar localmente
 
 ### Pré-requisitos
 
-Antes de começar, certifique-se de possuir:
-
-- Node.js instalado;
-- npm instalado;
-- Uma chave de API do Google Gemini.
+* Node.js
+* npm
+* Chave de API do Google Gemini
+* Vercel CLI
 
 ### 1. Clone o repositório
 
 ```bash
 git clone https://github.com/danieli-dutra/planeja-ai.git
-```
-
-Entre na pasta:
-
-```bash
 cd planeja-ai
 ```
 
@@ -247,137 +244,108 @@ cd planeja-ai
 npm install
 ```
 
-### 3. Configure a API do Gemini
+### 3. Configure a variável de ambiente
 
 Crie um arquivo `.env.local` na raiz do projeto:
 
 ```env
-VITE_GEMINI_API_KEY=sua_chave_aqui
+GEMINI_API_KEY=sua_chave_aqui
 ```
 
-> ⚠️ O arquivo `.env.local` não deve ser versionado no GitHub.
+Não versione arquivos `.env` ou `.env.local`.
 
-### 4. Execute o projeto
+### 4. Execute a aplicação
+
+Como o projeto utiliza uma Serverless Function para a integração com o Gemini, execute:
 
 ```bash
-npm run dev
+vercel dev
 ```
 
-A aplicação estará disponível no endereço informado pelo Vite, normalmente:
-
-```text
-http://localhost:5173
-```
+O Vercel CLI informará o endereço local disponível.
 
 ---
 
 ## 🧪 Validação
 
-Durante o desenvolvimento foram utilizados os comandos:
+Durante o desenvolvimento, o projeto foi validado com:
 
 ```bash
 npm run lint
 ```
 
-e:
-
 ```bash
 npm run build
 ```
 
-O projeto foi validado com sucesso utilizando ESLint e o processo de build do Vite/TypeScript.
+Também foi realizado um teste direto do endpoint `/api/insight` para verificar a comunicação entre a aplicação, a Serverless Function e o Gemini.
 
----
-
-## 🔍 Como testar o fluxo principal
-
-1. Acesse a aplicação;
-2. Inicie uma nova simulação;
-3. Informe sua renda mensal;
-4. Informe os custos fixos;
-5. Informe dívidas ou parcelas;
-6. Informe uma meta financeira;
-7. Defina o valor e o prazo;
-8. Gere a simulação;
-9. Aguarde a geração dos insights pela IA;
-10. Consulte a análise financeira;
-11. Utilize o simulador de prazo;
-12. Acesse o histórico;
-13. Abra os detalhes de uma simulação anterior;
-14. Teste a exclusão de um registro do histórico.
+O build foi concluído com sucesso e o código passou pela validação do ESLint.
 
 ---
 
 ## 💡 Principais aprendizados
 
-O desenvolvimento deste projeto permitiu praticar conceitos importantes de desenvolvimento Front-End moderno.
+### React e TypeScript
 
-### React + TypeScript
-
-- Criação de componentes reutilizáveis;
-- Tipagem de propriedades;
-- Hooks;
-- Gerenciamento de estado;
-- Composição de componentes.
-
-### Persistência no navegador
-
-A implementação e utilização do histórico permitiram trabalhar com:
-
-- `localStorage`;
-- Identificação única das simulações;
-- Recuperação de dados;
-- Atualização de registros;
-- Exclusão de registros.
+* Componentização
+* Props tipadas
+* Hooks
+* Gerenciamento de estado
+* Composição de componentes
+* Organização de responsabilidades
 
 ### Integração com IA
 
-A integração com o Gemini trouxe aprendizados sobre:
+* Construção de prompts estruturados
+* Consumo de APIs
+* Parsing de JSON
+* Tratamento de respostas inválidas
+* Estados de loading
+* Tratamento de erros
+* Controle de chamadas duplicadas
 
-- Construção de prompts estruturados;
-- Consumo de APIs;
-- Tratamento de respostas;
-- Parsing de JSON;
-- Estados de loading;
-- Tratamento de erros;
-- Prevenção de chamadas duplicadas.
+### Segurança
+
+A implementação da Serverless Function trouxe uma experiência prática sobre o cuidado necessário ao trabalhar com credenciais de APIs externas.
+
+A chave do Gemini deixou de ser utilizada diretamente no Front-End e passou a ser acessada pelo ambiente da função.
+
+### Persistência
+
+O histórico permitiu trabalhar com:
+
+* `localStorage`
+* Identificação das simulações
+* Recuperação de dados
+* Atualização de registros
+* Exclusão de registros
 
 ### Experiência do usuário
 
-As melhorias implementadas também permitiram trabalhar com:
+O desenvolvimento também envolveu decisões relacionadas a:
 
-- Feedback visual;
-- Fluxos de navegação;
-- Histórico;
-- Simulação interativa;
-- Visualização de informações financeiras;
-- Tema claro e escuro.
+* Hierarquia de informações
+* Feedback visual
+* Estados de carregamento
+* Tratamento de erros
+* Navegação
+* Simulação interativa
+* Tema claro e escuro
 
 ---
 
 ## 🚧 Próximos passos
 
-O projeto pode evoluir futuramente com funcionalidades como:
-
-- 📊 Gráficos de evolução financeira;
-- 💬 Conversa contínua com o Educador Financeiro;
-- 📚 Histórico de perguntas e respostas;
-- 📤 Exportação de relatórios;
-- 🎯 Acompanhamento da evolução das metas;
-- 🔔 Lembretes e notificações;
-- 🔐 Autenticação de usuários;
-- ☁️ Persistência em banco de dados;
-- 📱 Melhorias específicas para dispositivos móveis.
-
----
-
-## 📌 Observação sobre o projeto
-
-Este projeto foi desenvolvido como parte de um desafio prático da **Digital Innovation One**.
-
-A implementação parte do projeto-base disponibilizado no desafio e incorpora melhorias próprias para aprofundar os conhecimentos adquiridos durante o desenvolvimento.
-
-A proposta foi priorizar **aprendizado, experimentação e evolução incremental**, explorando como React, TypeScript e Inteligência Artificial podem ser utilizados juntos para criar experiências digitais mais úteis.
+* 📊 Gráficos de evolução financeira
+* 💬 Conversa contínua com o Educador Financeiro
+* 📚 Histórico de perguntas e respostas
+* 📤 Exportação de relatórios
+* 🎯 Acompanhamento da evolução das metas
+* 🔔 Lembretes e notificações
+* 🔐 Autenticação de usuários
+* ☁️ Persistência em banco de dados
+* 📱 Aprimoramentos para dispositivos móveis
 
 ---
 
@@ -385,24 +353,21 @@ A proposta foi priorizar **aprendizado, experimentação e evolução incrementa
 
 **Danieli Dutra**
 
-Estudante de Análise e Desenvolvimento de Sistemas e desenvolvedora em formação, com interesse em **Desenvolvimento Full Stack, UX/UI e Inteligência Artificial aplicada a produtos digitais**.
+Estudante de Análise e Desenvolvimento de Sistemas, com foco em **Desenvolvimento Full Stack, UX/UI e Inteligência Artificial aplicada a produtos digitais**.
 
 ### Conecte-se comigo
 
-- 💼 [LinkedIn](https://www.linkedin.com/in/danieli-dutra/)
-- 🐙 [GitHub](https://github.com/danieli-dutra/)
-
----
-
-## ⭐ Se este projeto foi útil para você
-
-Se quiser acompanhar minha evolução em tecnologia, considere deixar uma ⭐ no repositório e acompanhar meus próximos projetos.
+* 💼 [LinkedIn](https://www.linkedin.com/in/danieli-dutra/)
+* 🐙 [GitHub](https://github.com/danieli-dutra/)
 
 ---
 
 <div align="center">
 
-**Planeja.ai — planejamento financeiro mais claro, inteligente e acessível. 💜**
+### 🐷 Planeja.ai
+
+**Planejamento financeiro mais claro, inteligente e acessível. 💜**
+
+⭐ Se você gostou do projeto, considere deixar uma estrela no repositório.
 
 </div>
-
