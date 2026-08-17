@@ -30,34 +30,29 @@ export interface InsightData {
   }
 }
 
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY
-const MODEL_NAME = 'gemini-2.5-flash'
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`
-
-async function callGeminiAPI(prompt: string) {
-  if (!API_KEY || API_KEY === 'undefined') {
-    throw new Error('VITE_GEMINI_API_KEY não configurada.')
-  }
-
-  const response = await fetch(GEMINI_API_URL, {
+async function callInsightAPI(prompt: string): Promise<GeminiResponse> {
+  const response = await fetch('/api/insight', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-    }),
+    body: JSON.stringify({ prompt }),
   })
 
   if (!response.ok) {
-    throw new Error(`Erro na requisição: ${response.status}`)
+    const data = (await response.json().catch(() => null)) as {
+      error?: string
+    } | null
+
+    throw new Error(data?.error ?? `Erro na requisição: ${response.status}`)
   }
 
   return (await response.json()) as GeminiResponse
 }
 
-export async function getInsight(prompt: string) {
-  const response = await callGeminiAPI(prompt)
+export async function getInsight(prompt: string): Promise<InsightData> {
+  const response = await callInsightAPI(prompt)
+
   const rawText = response.candidates?.[0]?.content?.parts?.[0]?.text
 
   if (!rawText) {
@@ -72,7 +67,6 @@ export async function getInsight(prompt: string) {
   try {
     return JSON.parse(cleanJson) as InsightData
   } catch (error) {
-    console.error('Resposta da Gemini não é um JSON válido:', rawText)
     console.error('Erro ao fazer JSON.parse:', error)
 
     throw new Error('A IA retornou uma resposta em formato inválido.', {
