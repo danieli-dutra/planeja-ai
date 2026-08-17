@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom'
 import { AIInsightCard } from '@/components/features/SimulationResults/AIInsightCardProps'
 import { Card } from '@/components/features/SimulationResults/Card'
 import { FinancialSummary } from '@/components/features/SimulationResults/FinancialSummary'
+import { GoalSimulator } from '@/components/features/SimulationResults/GoalSimulator'
 import { PageHero } from '@/components/shared/PageHero'
 import { useSimulationStorage } from '@/hooks/useSimulationStorage'
 import { calcMonthlySavings } from '@/utils/simulation'
@@ -75,6 +76,8 @@ export function SimulationResultsPage() {
       </div>
 
       <FinancialSummary data={data} />
+
+      <GoalSimulator data={data} />
 
       <div className="grid gap-6 lg:grid-cols-3">
         <AIInsightCard simulationId={id ?? data.id} />
